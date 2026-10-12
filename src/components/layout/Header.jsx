@@ -3,74 +3,109 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { verticals } from '../../data/services';
 import SearchOverlay from './SearchOverlay';
 
+function MobileLink({ to, label }) {
+  return (
+    <NavLink to={to} className="pl-m-link">
+      {label}
+    </NavLink>
+  );
+}
+
+function MobileGroup({ title, base, items }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="pl-m-group">
+      <button
+        type="button"
+        className="pl-m-link pl-m-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {title}
+        <i className={`bi ${open ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
+      </button>
+      {open && (
+        <div className="pl-m-sub">
+          {items.map((s) => (
+            <Link key={s.slug} to={`${base}/${s.slug}`} className="pl-m-sublink">
+              {s.name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  // close menu on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  // scrolled state
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Esc closes the menu
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && setMenuOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   return (
     <>
-      <header className="pl-header">
-        <div className="container-pl d-flex align-items-center justify-content-between" style={{ height: 78 }}>
+      <header className={`pl-header${scrolled ? ' is-scrolled' : ''}`}>
+        <div className="container-pl pl-bar">
+          {/* logo */}
           <Link to="/" className="pl-logo">
-            Planning<span>Labs</span>
+            <img src="/images/planninglabs logo.png" alt="PlanningLabs" />
           </Link>
 
-          <nav className="d-none d-lg-flex align-items-center gap-4">
-            <NavLink to="/about" className="pl-nav-link">About</NavLink>
-
-            <div className="pl-nav-item position-relative">
-              <NavLink to="/services/experiential-marketing" className="pl-nav-link">Experiential Marketing</NavLink>
-              <div className="pl-dropdown">
-                {verticals.experiential.services.map((s) => (
-                  <Link key={s.slug} to={`/services/${s.slug}`}>{s.name}</Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="pl-nav-item position-relative">
-              <NavLink to="/services/digital-marketing" className="pl-nav-link">Digital Marketing</NavLink>
-              <div className="pl-dropdown">
-                {verticals.digital.services.map((s) => (
-                  <Link key={s.slug} to={`/services/${s.slug}`}>{s.name}</Link>
-                ))}
-              </div>
-            </div>
-
-            <NavLink to="/our-work" className="pl-nav-link">Our Work</NavLink>
-            <NavLink to="/case-studies" className="pl-nav-link">Case Studies</NavLink>
-            <NavLink to="/insights" className="pl-nav-link">Insights</NavLink>
-            <NavLink to="/careers" className="pl-nav-link">Careers</NavLink>
-          </nav>
-
-          <div className="d-flex align-items-center gap-3">
+          {/* search, button, hamburger */}
+          <div className="pl-right">
             <button
-              className="btn btn-link p-0 text-dark"
+              type="button"
+              className="pl-icon-btn"
               aria-label="Search"
               onClick={() => setSearchOpen(true)}
             >
-              <i className="bi bi-search fs-5"></i>
+              <i className="bi bi-search"></i>
             </button>
-            <Link to="/contact" className="btn-pl btn-pl-signal d-none d-md-inline-flex">
-              Start a Project
+
+            <Link to="/contact" className="pl-talk">
+              Let's talk
+              <span className="pl-talk-icon">
+                <i className="bi bi-arrow-right"></i>
+              </span>
             </Link>
+
             <button
-              className="btn btn-link p-0 text-dark d-lg-none"
+              type="button"
+              className="pl-icon-btn pl-burger"
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              <i className={`bi ${menuOpen ? 'bi-x-lg' : 'bi-list'} fs-3`}></i>
+              <i className={`bi ${menuOpen ? 'bi-x-lg' : 'bi-list'}`}></i>
             </button>
           </div>
         </div>
 
+        {/* dropdown menu (all screen sizes) */}
         {menuOpen && (
-          <div className="d-lg-none border-top" style={{ borderColor: 'var(--line)' }}>
-            <div className="container-pl py-3 d-flex flex-column gap-1">
+          <div className="pl-mobile">
+            <div className="container-pl pl-mobile-inner">
               <MobileLink to="/about" label="About" />
               <MobileGroup title="Experiential Marketing" base="/services" items={verticals.experiential.services} />
               <MobileGroup title="Digital Marketing" base="/services" items={verticals.digital.services} />
@@ -83,39 +118,8 @@ export default function Header() {
           </div>
         )}
       </header>
+
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </>
-  );
-}
-
-function MobileLink({ to, label }) {
-  return (
-    <Link to={to} className="py-2 fw-semibold" style={{ fontFamily: 'var(--font-display)' }}>
-      {label}
-    </Link>
-  );
-}
-
-function MobileGroup({ title, base, items }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div>
-      <button
-        className="btn btn-link p-0 py-2 w-100 text-start fw-semibold text-dark text-decoration-none d-flex justify-content-between"
-        style={{ fontFamily: 'var(--font-display)' }}
-        onClick={() => setOpen((v) => !v)}
-      >
-        {title} <i className={`bi bi-chevron-${open ? 'up' : 'down'}`}></i>
-      </button>
-      {open && (
-        <div className="ps-3 d-flex flex-column">
-          {items.map((s) => (
-            <Link key={s.slug} to={`${base}/${s.slug}`} className="py-1 text-secondary">
-              {s.name}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
   );
 }

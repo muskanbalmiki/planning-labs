@@ -12,8 +12,7 @@ export default function Footer() {
               Planning<span>Labs</span>
             </Link>
             <p className="text-white-50" style={{ maxWidth: 320 }}>
-              An experiential and digital marketing agency based in Mumbai, building
-              brand experiences and growth systems across India.
+            Don't hesitate to drop us a line if you need consultancy with your project. Our team will always be there to help you reach your goal by proposing the right choices.
             </p>
             <div className="d-flex gap-3 mt-4">
               {['instagram', 'linkedin', 'facebook', 'youtube'].map((s) => (
@@ -50,21 +49,60 @@ export default function Footer() {
               <Link to="/case-studies" className="small">Case Studies</Link>
               <Link to="/insights" className="small">Insights</Link>
               <Link to="/careers" className="small">Careers</Link>
-              <Link to="/contact" className="small">Contact</Link>
+              {/* <Link to="/contact" className="small">Contact</Link> */}
             </div>
           </div>
 
           <div className="col-6 col-lg-2">
-            <h6>Contact</h6>
+            <h6>Part of Swapnil Tambe</h6>
             <div className="d-flex flex-column gap-2 small">
-              <a href="tel:+912200000000"><i className="bi bi-telephone me-2"></i>+91 22 0000 0000</a>
-              <a href="mailto:hello@planninglabs.in"><i className="bi bi-envelope me-2"></i>hello@planninglabs.in</a>
-              <span className="text-white-50"><i className="bi bi-geo-alt me-2"></i>Mumbai, Maharashtra, India</span>
+              <a href="Saudi-event-expert" className="text-decoration-underline">Saudi Arabia Event Expert</a>
+              <a href="dubai-event-solution" className="text-decoration-underline">Dubai Event Solution</a>
+              <a href="swapnil-tambe-group" className="text-decoration-underline">Swapnil Tambe Group</a>
+           
             </div>
           </div>
         </div>
 
         <hr className="hr-line mb-4" />
+
+          <div className="row g-2 pb-5">
+            <div className="col-12 col-lg-4">
+            <h6>India :</h6>
+            <p className="text-white-50" style={{ maxWidth: 320 }}>
+            80.1/B, Ground & First Floor, Kamgar Nagar, Near BKC, Kurla East, MH INDIA 400024 
+            Contact: +91 9967253567
+            </p>
+           
+          </div>
+
+         <div className="col-12 col-lg-4">
+            <h6>UAE :</h6>
+            <p className="text-white-50" style={{ maxWidth: 320 }}>
+          80.1/B, Barsha Heights 1812, B-Tower, Al Shaib Tower Dubai, Al Barsha Heights, Tecom, United Arab Emirates
+          Contact: +971 501234567
+            </p>
+           
+          </div>
+
+            <div className="col-12 col-lg-4">
+            <h6>Canada :</h6>
+            <p className="text-white-50" style={{ maxWidth: 320 }}>
+            431B, 41st Avenue NE, Calgary, Canada Contact: +1 (778) 230-1144
+            </p>
+           
+          </div>
+          
+          <div className="col-12 col-lg-4">
+            <h6>Saudi Arabia :</h6>
+            <p className="text-white-50" style={{ maxWidth: 320 }}>
+           Jeddah ,2164 ,Sau Contact: +966 (0) 530877889
+            </p>
+           
+          </div>
+          
+
+          </div>
 
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">
           <span>© {year} Planning Labs. All rights reserved.</span>

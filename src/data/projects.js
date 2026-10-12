@@ -3,6 +3,7 @@ export const industries = [
   'Technology', 'Retail & E-commerce', 'Hospitality',
 ];
 
+
 export const projects = [
   { id: 'p1', title: 'Skyline Realty — Launch Pavilion', category: 'experiential', service: 'Exhibitions & Stall Design', industry: 'Real Estate', year: 2025, cover: 'linear-gradient(135deg,#ff4d2e,#7a1f10)', summary: 'A 6,000 sq.ft immersive sales pavilion for a luxury tower launch in South Mumbai.' },
   { id: 'p2', title: 'Nova Bank — Employee Town Hall', category: 'experiential', service: 'Employee Engagement', industry: 'BFSI', year: 2025, cover: 'linear-gradient(135deg,#0b3d3a,#0e1013)', summary: 'A pan-India hybrid town hall for 4,000+ employees across 12 cities.' },
@@ -17,5 +18,16 @@ export const projects = [
   { id: 'p11', title: 'Pulse Motors — CGI Product Film', category: 'digital', service: 'CGI & Digital Content', industry: 'Automotive', year: 2024, cover: 'linear-gradient(135deg,#7a1f10,#0e1013)', summary: 'Photoreal CGI film for a vehicle variant launch, shot-free.' },
   { id: 'p12', title: 'Meridian Group — MICE Offsite', category: 'experiential', service: 'MICE', industry: 'BFSI', year: 2023, cover: 'linear-gradient(135deg,#d4a72c,#0b3d3a)', summary: 'A 3-day leadership offsite and incentive trip for a 300-person cohort.' },
 ];
-
+// [
+// {
+//   id: 'brand-launch',
+//   title: 'Brand Launch Event',
+//   service: 'Events',
+//   industry: 'Automobile',
+//   year: 2025,
+//   category: 'experiential',
+//   cover: 'linear-gradient(160deg, #dfa811, #0e1014)',   // keep as a fallback
+//   image: '../images/work1.jpeg'             // new
+// },
+// ]
 export const getProjectById = (id) => projects.find((p) => p.id === id);

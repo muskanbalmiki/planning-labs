@@ -7,3 +7,6 @@ export default function SectionHeading({ kicker, title, subtitle, align = 'left'
     </div>
   );
 }
+
+
+

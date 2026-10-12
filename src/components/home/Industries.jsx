@@ -1,24 +1,42 @@
 import { industries } from '../../data/projects';
-import SectionHeading from '../common/SectionHeading';
 
 export default function Industries() {
   return (
-    <section className="section">
+    <section className="section industries-section">
       <div className="container-pl">
-        <SectionHeading
-          kicker="Industries Served"
-          title="Category expertise across sectors"
-          subtitle="We've run experiential and digital programmes for brands across these categories, each with its own compliance, audience and sales-cycle nuances."
-        />
-        <div className="row g-3">
-          {industries.map((ind, i) => (
-            <div key={i} className="col-6 col-md-3">
-              <div className="p-3 border rounded-3 h-100 d-flex align-items-center gap-2" style={{ borderColor: 'var(--line)' }}>
-                <span className="divider-num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="fw-semibold" style={{ fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>{ind}</span>
-              </div>
-            </div>
-          ))}
+        <div className="ind-grid">
+          {/* left: statement */}
+          <div className="ind-left">
+            <span className="ind-pill">Industries served</span>
+            <h2 className="ind-title">
+              <span>Built for brands</span>
+              <span className="ind-soft">across industries.</span>
+            </h2>
+            <p className="ind-lede">
+              From real estate to healthcare, we plan every campaign around how each category
+              actually buys.
+            </p>
+          </div>
+
+          {/* right: numbered list */}
+          <ul className="ind-list">
+            {industries.map((item, i) => {
+              const label = typeof item === 'string' ? item : item.name;
+              return (
+                <li
+                  key={i}
+                  className="ind-row"
+                  style={{ '--accent': i % 2 ? '#b89bdd' : '#ffc756' }}
+                >
+                  <span className="ind-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="ind-name">{label}</span>
+                  <span className="ind-go">
+                    <i className="bi bi-arrow-up-right"></i>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>

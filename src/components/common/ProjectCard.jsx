@@ -12,3 +12,4 @@ export default function ProjectCard({ project }) {
     </Link>
   );
 }
+

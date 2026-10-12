@@ -18,6 +18,8 @@ import JobDetail from './pages/JobDetail';
 import Contact from './pages/Contact';
 import SearchResults from './pages/SearchResults';
 import NotFound from './pages/NotFound';
+import ExperientialM from './pages/ExperientialM';
+import DigitalM from './pages/DigitalM';
 
 export default function App() {
   return (
@@ -49,6 +51,8 @@ export default function App() {
           <Route path="/search" element={<SearchResults />} />
 
           <Route path="*" element={<NotFound />} />
+          <Route path="/experiential-marketing" element={<ExperientialM />} />
+          <Route path="/digital-marketing" element={<DigitalM />} />
         </Routes>
       </main>
       <Footer />

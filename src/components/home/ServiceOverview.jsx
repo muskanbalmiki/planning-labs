@@ -1,45 +1,87 @@
 import { Link } from 'react-router-dom';
 import { verticals } from '../../data/services';
-import SectionHeading from '../common/SectionHeading';
+
+// same palette as the hero; each card gets a photo with a colour tint on top
+const themes = [
+  {
+    accent: '#ffc756',
+    on: '#2a1a05',
+    icon: 'bi-megaphone-fill',
+    photo: '/images/services/experiential.jpg',
+    tint: 'rgba(255, 155, 23, 0.55)',
+    blurb:
+      'Creating meaningful brand experiences through events, activations, exhibitions and immersive experiences.',
+  },
+  {
+    accent: '#b89bdd',
+    on: '#1a1024',
+    icon: 'bi-graph-up-arrow',
+    photo: '/images/services/digital.jpg',
+    tint: 'rgba(122, 84, 167, 0.65)',
+    blurb:
+      'Building digital experiences and campaigns that connect brands with the audiences that matter.',
+  },
+];
 
 export default function ServiceOverview() {
   return (
-    <section className="section">
+    <section className="section services-section">
       <div className="container-pl">
-        <SectionHeading
-          kicker="What We Do"
-          title="Two disciplines. One accountable team."
-          subtitle="Every brief runs through both lenses — live experience and digital growth — so nothing gets planned in isolation."
-        />
-        <div className="row g-4">
-          {Object.values(verticals).map((v) => (
-            <div key={v.slug} className="col-md-6">
-              <div
-                className="p-4 p-lg-5 h-100 rounded-3"
+        {/* header */}
+        <div className="sv-intro">
+          <div>
+            <span className="sv-pill">What we do</span>
+            <h2 className="sv-heading">
+              Two disciplines. <span className="sv-grad">One accountable team.</span>
+            </h2>
+          </div>
+          
+        </div>
+
+        {/* cards */}
+        <div className="sv-wrap">
+          {Object.values(verticals).map((v, i) => {
+            const t = themes[i % themes.length];
+            return (
+              <article
+                key={v.slug}
+                className="sv-pane"
                 style={{
-                  background: v.accent === 'signal' ? 'var(--ink)' : 'var(--current)',
-                  color: 'var(--paper)',
+                  '--accent': t.accent,
+                  '--on': t.on,
+                  '--bg': `linear-gradient(160deg, ${t.tint} 0%, rgba(8,6,15,0.88) 78%), url('${t.photo}') center / cover no-repeat, #08060f`,
                 }}
               >
-                <span className="kicker" style={{ color: v.accent === 'signal' ? 'var(--signal)' : '#5fd6c9' }}>
-                  {v.name}
-                </span>
-                <h3 className="text-white mb-3">{v.tagline}</h3>
-                <p className="text-white-50 mb-4">{v.description}</p>
-                <ul className="list-unstyled mb-4">
-                  {v.services.slice(0, 4).map((s) => (
-                    <li key={s.slug} className="mb-2 text-white-50">
-                      <i className="bi bi-arrow-right-short me-1"></i>
-                      <Link to={`/services/${s.slug}`} className="text-white-50">{s.name}</Link>
-                    </li>
-                  ))}
-                </ul>
-                <Link to={`/services/${v.slug}`} className="btn-pl btn-pl-outline-light">
-                  Explore {v.name} <i className="bi bi-arrow-right"></i>
-                </Link>
-              </div>
-            </div>
-          ))}
+                <div className="sv-body">
+                  <div className="sv-head">
+                    <span className="sv-icon">
+                      <i className={`bi ${t.icon}`}></i>
+                    </span>
+                    {/* <span className="sv-count">{v.services.length} services</span> */}
+                  </div>
+
+                  <h3 className="sv-title">{v.name}</h3>
+                  <p className="sv-blurb">{v.description || t.blurb}</p>
+
+                  <ul className="sv-list">
+                    {v.services.slice(0, 4).map((s, n) => (
+                      <li key={s.slug}>
+                        <Link to={`/services/${s.slug}`}>
+                          <em>{String(n + 1).padStart(2, '0')}</em>
+                          <span>{s.name}</span>
+                          <b><i className="bi bi-send"></i></b>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link to={`/services/${v.slug}`} className="sv-cta">
+                    Explore {v.name} <i className="bi bi-arrow-right"></i>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
