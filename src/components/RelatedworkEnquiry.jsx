@@ -1,13 +1,4 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-/* ---------- data (replace with your own imports if you have them) ---------- */
-const fallbackProjects = [
-  { id: 'skyline-realty', title: 'Skyline Realty — Launch Pavilion', service: 'Exhibitions & Stall Design', industry: 'Real Estate', year: 2025, cover: 'linear-gradient(160deg,#ff9b17,#08060f)' },
-  { id: 'nova-bank', title: 'Nova Bank — Employee Town Hall', service: 'Employee Engagement', industry: 'BFSI', year: 2025, cover: 'linear-gradient(160deg,#7a54a7,#08060f)' },
-  { id: 'verdant-foods', title: 'Verdant Foods — Retail Activation', service: 'Brand Activations', industry: 'FMCG', year: 2024, cover: 'linear-gradient(160deg,#ffc756,#08060f)' },
-  { id: 'autodrive', title: 'AutoDrive Expo — Booth Experience', service: 'Exhibitions & Stall Design', industry: 'Automotive', year: 2024, cover: 'linear-gradient(160deg,#322553,#ff9b17)' },
-];
 
 const interests = [
   'Experiential Marketing — Events',
@@ -21,79 +12,6 @@ const interests = [
 ];
 
 const MAX_MB = 20;
-
-/* ---------- related work ---------- */
-function RelatedWork({ projects }) {
-  return (
-    <section className="rw-section">
-      <div className="container-pl">
-        <div className="rw-head">
-          <div>
-            <span className="rw-kicker">Related work</span>
-            <h2 className="rw-title">Similar projects we've delivered</h2>
-          </div>
-          <Link to="/our-work" className="rw-all">
-            View all
-            <span className="rw-all-icon"><i className="bi bi-arrow-right"></i></span>
-          </Link>
-        </div>
-
-        {/* <div className="rw-grid">
-          {projects.slice(0, 4).map((p) => (
-            <Link key={p.id} to={`/our-work/${p.id}`} className="rw-card">
-              <div
-                className="rw-thumb"
-                style={{ backgroundImage: p.image ? `url(${p.image})` : p.cover }}
-              />
-              <div className="rw-info">
-                <span className="rw-pill">{p.service}</span>
-                <h5>{p.title}</h5>
-                <p>{p.industry} · {p.year}</p>
-              </div>
-            </Link>
-          ))}
-        </div> */}
-        <div className="rw-grid">
-  {projects.slice(0, 4).map((p) => {
-    const digital = /digital|social|seo|performance|influencer/i.test(p.service || '');
-    return (
-      <Link
-        key={p.id}
-        to={`/our-work/${p.id}`}
-        draggable={false}
-        className="fw-card"
-        style={{
-          '--accent': digital ? '#b89bdd' : '#ffc756',
-          '--on': digital ? '#1a1024' : '#2a1a05',
-          '--tint': digital ? 'rgba(122,84,167,0.62)' : 'rgba(255,155,23,0.5)',
-        }}
-      >
-        <span
-          className="fw-photo"
-          style={{ backgroundImage: p.image ? `url(${p.image})` : p.cover }}
-        />
-
-        <span className="fw-top">
-          <span className="fw-tag">{p.service}</span>
-          {p.year && <span className="fw-year">{p.year}</span>}
-        </span>
-
-        <span className="fw-bottom">
-          <span className="fw-name">{p.title}</span>
-          <span className="fw-client">{p.industry}</span>
-        </span>
-
-        <span className="fw-go"><i className="bi bi-arrow-up-right"></i></span>
-      </Link>
-    );
-  })}
-</div>
-
-        
-      </div>
-    </section>
-  );
-}
 
 /* ---------- enquiry form ---------- */
 function EnquiryForm() {
@@ -259,11 +177,6 @@ function EnquiryForm() {
 }
 
 /* ---------- page ---------- */
-export default function RelatedWorkEnquiry({ projects = fallbackProjects }) {
-  return (
-    <>
-      <RelatedWork projects={projects} />
-      <EnquiryForm />
-    </>
-  );
+export default function RelatedWorkEnquiry() {
+  return <EnquiryForm />;
 }
