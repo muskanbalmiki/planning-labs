@@ -279,7 +279,7 @@ export default function ExperientialM() {
         <div className="xm-wide">
           <div className="xm-block-head">
             {/* <span className="xm-chip">Reels</span> */}
-            <h2 className="xm-h">Watch us <em>work.</em></h2>
+            <span className="enq-pill">Watch us work</span>
           </div>
 
           <div className="xm-wall">
@@ -301,6 +301,10 @@ export default function ExperientialM() {
       {/* ===== 5. SERVICES (every card opens its own page) ===== */}
       <section className="em-services">
         <div className="container-pl">
+          <div className="em-services-head">
+            <a href="#dm-services" className="enq-pill">Our services</a>
+          </div>
+
           <div className="em-grid">
             {vertical.services.map((s) => (
               <Link

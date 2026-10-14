@@ -56,8 +56,8 @@ export default function Footer() {
           <div className="col-6 col-lg-2">
             <h6>Part of Swapnil Tambe</h6>
             <div className="d-flex flex-column gap-2 small">
-              <a href="Saudi-event-expert" className="text-decoration-underline">Saudi Arabia Event Expert</a>
-              <a href="dubai-event-solution" className="text-decoration-underline">Dubai Event Solution</a>
+              {/* <a href="Saudi-event-expert" className="text-decoration-underline">Saudi Arabia Event Expert</a>
+              <a href="dubai-event-solution" className="text-decoration-underline">Dubai Event Solution</a> */}
               <a href="swapnil-tambe-group" className="text-decoration-underline">Swapnil Tambe Group</a>
            
             </div>

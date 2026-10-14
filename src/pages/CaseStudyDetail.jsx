@@ -1,54 +1,105 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
-import Breadcrumb from '../components/common/Breadcrumb';
-import { getCaseStudyById } from '../data/caseStudies';
+import { caseStudies, getCaseStudyById } from '../data/caseStudies';
 
 export default function CaseStudyDetail() {
   const { id } = useParams();
   const cs = getCaseStudyById(id);
   if (!cs) return <Navigate to="/case-studies" replace />;
 
-  return (
-    <>
-      <div style={{ background: cs.cover, minHeight: 340 }} className="d-flex align-items-end">
-        <div className="container-pl pb-5 pt-5">
-          <Breadcrumb items={[{ label: 'Case Studies', to: '/case-studies' }, { label: cs.title }]} />
-          <span className="badge-pl bg-white mb-3 d-inline-block">{cs.vertical} · {cs.industry}</span>
-          <h1 className="text-white" style={{ maxWidth: 760 }}>{cs.title}</h1>
-        </div>
-      </div>
+  const digital = String(cs.vertical).toLowerCase().includes('digital');
 
-      <section className="section">
+  // previous / next case study (wraps around)
+  const idx = caseStudies.findIndex((c) => c.id === cs.id);
+  const prev = caseStudies[(idx - 1 + caseStudies.length) % caseStudies.length];
+  const next = caseStudies[(idx + 1) % caseStudies.length];
+  const hasMore = caseStudies.length > 1;
+
+  // light follows the cursor on cards
+  const spot = (e) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+
+  return (
+    <div className={`cs-page${digital ? ' is-digital' : ''}`}>
+      {/* ================= hero on the project cover ================= */}
+      <header className="cs-dhero">
+        <div className="cs-dhero-bg" style={{ background: cs.cover }} aria-hidden="true" />
+        <div className="container-pl cs-dhero-inner">
+          <Link to="/case-studies" className="cs-back">
+            <i className="bi bi-arrow-left"></i> All case studies
+          </Link>
+          <span className="cs-pill">{cs.vertical} · {cs.industry}</span>
+          <h1 className="cs-title">{cs.title}</h1>
+          {cs.client && <p className="cs-lead">Client: {cs.client}</p>}
+        </div>
+      </header>
+
+      {/* ================= results ================= */}
+      <section className="cs-section cs-first">
         <div className="container-pl">
-          <div className="row g-4 mb-5">
+          <div className="cs-stats">
             {cs.results.map((r, i) => (
-              <div key={i} className="col-6 col-md-4">
-                <div className="p-4 border rounded-3 text-center" style={{ borderColor: 'var(--line)' }}>
-                  <div className="stat-num">{r.value}</div>
-                  <div className="small text-secondary">{r.label}</div>
-                </div>
+              <div key={i} className="cs-stat" onMouseMove={spot}>
+                <b>{r.value}</b>
+                <span>{r.label}</span>
               </div>
             ))}
           </div>
 
-          <div className="row g-5">
+          {/* ================= challenge + approach ================= */}
+          <div className="row g-4">
             <div className="col-lg-6">
-              <span className="kicker">The Challenge</span>
-              <p className="text-secondary">{cs.challenge}</p>
+              <div className="cs-story" onMouseMove={spot}>
+                <span className="cs-pill">The challenge</span>
+                <p>{cs.challenge}</p>
+              </div>
             </div>
             <div className="col-lg-6">
-              <span className="kicker current">Our Approach</span>
-              <p className="text-secondary">{cs.approach}</p>
+              <div className="cs-story cs-story-alt" onMouseMove={spot}>
+                <span className="cs-pill cs-pill-vio">Our approach</span>
+                <p>{cs.approach}</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section section-dark text-center">
+      {/* ================= previous / next ================= */}
+      {hasMore && (
+        <section className="cs-section cs-tight">
+          <div className="container-pl">
+            <div className="cs-next">
+              <Link to={`/case-studies/${prev.id}`} className="cs-nav" onMouseMove={spot}>
+                <span className="cs-nav-label"><i className="bi bi-arrow-left"></i> Previous</span>
+                <span className="cs-nav-title">{prev.title}</span>
+              </Link>
+              <Link to={`/case-studies/${next.id}`} className="cs-nav cs-nav-right" onMouseMove={spot}>
+                <span className="cs-nav-label">Next <i className="bi bi-arrow-right"></i></span>
+                <span className="cs-nav-title">{next.title}</span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ================= closing call to action ================= */}
+      <section className="cs-section cs-last">
         <div className="container-pl">
-          <h3 className="text-white mb-3">Want results like {cs.client}'s?</h3>
-          <Link to="/contact" className="btn-pl btn-pl-signal">Talk to Our Team</Link>
+          <div className="cs-cta">
+            <div>
+              <span className="cs-pill">Your turn</span>
+              <h2 className="cs-h2">Want results like {cs.client}'s?</h2>
+            </div>
+            <Link to="/contact" className="cs-btn">
+              <span className="cs-btn-icon"><i className="bi bi-arrow-right"></i></span>
+              Talk to our team
+            </Link>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

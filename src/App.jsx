@@ -20,6 +20,10 @@ import SearchResults from './pages/SearchResults';
 import NotFound from './pages/NotFound';
 import ExperientialM from './pages/ExperientialM';
 import DigitalM from './pages/DigitalM';
+import InsightDetail from './pages/InsightDetail';
+import JobApply from './pages/JobApply';
+
+
 
 export default function App() {
   return (
@@ -53,6 +57,9 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/experiential-marketing" element={<ExperientialM />} />
           <Route path="/digital-marketing" element={<DigitalM />} />
+          <Route path="/insights/:slug" element={<InsightDetail />} />
+          <Route path="/careers/:id" element={<JobApply />} />
+
         </Routes>
       </main>
       <Footer />
